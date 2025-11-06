@@ -4,7 +4,7 @@
     static String convert(String[] args) {
 
         if (args.length != 3) {
-            return "Error";
+            return "ERROR";
         }
 
         String from = args[0];
@@ -14,7 +14,7 @@
         try {
             value = Double.parseDouble(args[2]);
         } catch (NumberFormatException e) {
-            return "Error";
+            return "ERROR";
         }
 
         double result;
@@ -24,7 +24,7 @@
                 if (to.equals("fahrenheit")) {
                     result = (value * 9 / 5) + 32;
                 } else {
-                    return "Error";
+                    return "ERROR";
                 }
                 break;
 
@@ -32,7 +32,7 @@
                 if (to.equals("celsius")) {
                     result = (value - 32) * 5 / 9;
                 } else {
-                    return "Error";
+                    return "ERROR";
                 }
                 break;
 
@@ -40,7 +40,7 @@
                 if (to.equals("miles")) {
                     result = value * 0.621371;
                 } else {
-                    return "Error";
+                    return "ERROR";
                 }
                 break;
 
@@ -48,7 +48,7 @@
                 if (to.equals("kilometers")) {
                     result = value / 0.621371;
                 } else {
-                    return "Error";
+                    return "ERROR";
                 }
                 break;
 
@@ -56,18 +56,18 @@
                 if (to.equals("kilograms")) {
                     result = value * 0.453592;
                 } else {
-                    return "Error";
+                    return "ERROR";
                 }
                 break;
 
 
             default:
-                return "Error";
+                return "ERROR";
         }
 
         // ✅ Arrondi à 2 décimales
-        result = Math.round(result * 100.0) / 100.0;
-        return String.format("%.2f", result);
+        result = Math.round(result * 100.0) / 100.0; //1.1489636535  //1.151255
+        return String.format("%.2f",result);
     }
 
     public static void main(String[] args) {
