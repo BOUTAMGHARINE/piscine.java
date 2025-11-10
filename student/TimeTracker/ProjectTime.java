@@ -7,63 +7,72 @@ public class ProjectTime {
     private String endTime;
     private float hoursLogged;
 
-     SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-    public ProjectTime(String start, String end) {
+    public ProjectTime(String start, String end){
         this.startTime = start;
         this.endTime = end;
-        updateHoursLogged();
+
+        UpdatHoursLogged();
+    
     }
 
-    public void setStartTime(String newValue) {
-        this.startTime = newValue;
-        updateHoursLogged();
+    public void setStartTime(String start){
+        this.startTime =start;
+        UpdatHoursLogged();
+
+    }
+    public void setEndTime(String end){
+        this.endTime =end;
+        UpdatHoursLogged();
+
     }
 
-    public void setEndTime(String newValue) {
-        this.endTime = newValue;
-        updateHoursLogged();
-    }
-
-    public String getStartTime() {
+    public String getStartTime(){
         return this.startTime;
-    }
 
-    public String getEndTime() {
+    }
+    public String getEndTime(){
         return this.endTime;
     }
 
-    public String getHoursLogged() {
+    public String getHoursLogged(){
+
         if (hoursLogged == -1) {
             return "-1";
         }
+        float timeInMinut = hoursLogged * 60;
+        if (timeInMinut < 120) {
+            return (int)timeInMinut + " m";
+        }else if (hoursLogged < 120 ) {
+            return (int) hoursLogged +" h";
+        }else if ((hoursLogged/24f)<120){
+            return  (int)(hoursLogged/24f) +" d";
+        }else {
+            return (int) (hoursLogged / (24f * 30f)) + " mo";
 
-        float minutes = hoursLogged * 60;
-
-        if (minutes < 120) { // moins de 2 heures
-            return ((int) minutes) + " m";
-        } else if (hoursLogged < 120) { // moins de 120 heures
-            return ((int) hoursLogged) + " h";
-        } else if (hoursLogged < 120 * 24) { // moins de 120 jours
-            return ((int) (hoursLogged / 24)) + " d";
-        } else { // 120 jours et plus
-            return ((int) (hoursLogged / (24 * 30))) + " mo";
         }
+
+
     }
 
-    private void updateHoursLogged() {
-        try {
-            Date dateS = DATE_FORMAT.parse(startTime);
-            Date dateE = DATE_FORMAT.parse(endTime);
 
-            long diffMillis = dateE.getTime() - dateS.getTime();
-            if (diffMillis < 0) { // fin avant début
-                hoursLogged = -1;
-            } else {
-                hoursLogged = diffMillis / (1000f * 60 * 60); // conversion millisecondes → heures
+    public void UpdatHoursLogged() {
+        try {
+            Date sdate = DATE_FORMAT.parse(startTime);
+            Date edate = DATE_FORMAT.parse(endTime);
+            float value = edate.getTime() - sdate.getTime();
+            if (value < 0) {
+                this.hoursLogged = -1;
+                return ;
+            }else {
+                float timeInhoure = value/(3600 * 1000f); 
+                this.hoursLogged =timeInhoure;
             }
-        } catch (ParseException e) {
-            hoursLogged = -1; // erreur de parsing
+            
+        }catch(Exception e){
+            this.hoursLogged = -1;
+            return;
         }
     }
 }
