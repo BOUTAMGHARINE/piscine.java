@@ -20,3 +20,4 @@ public abstract class RacletteDecorator implements Raclette {
         return getIngredients() + " pour " + getCalories() + " calories";
     }
 }
+//
